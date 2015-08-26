@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity {
         if (btAdapter != null) {
             btAdapter.cancelDiscovery();
         }
-        
+
         this.unregisterReceiver(mReceiver);
     }
 
