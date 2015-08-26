@@ -18,6 +18,8 @@ import com.ssgames.com.btc.R;
 public class MainActivity extends ActionBarActivity {
 
 
+    private BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+
     /*
 	 * Blue tooth broadcast receiver
 	 */
@@ -78,6 +80,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        if (btAdapter != null) {
+            btAdapter.cancelDiscovery();
+        }
+        
         this.unregisterReceiver(mReceiver);
     }
 
