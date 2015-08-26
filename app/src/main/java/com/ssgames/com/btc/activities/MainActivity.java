@@ -1,5 +1,11 @@
 package com.ssgames.com.btc.activities;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +15,40 @@ import com.ssgames.com.btc.R;
 
 
 public class MainActivity extends ActionBarActivity {
+
+
+    /*
+	 * Blue tooth broadcast receiver
+	 */
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (device.getBluetoothClass().getDeviceClass() == BluetoothClass.Device.PHONE_SMART) {
+                    //bluetoothDeviceFound(device);
+                }
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED
+                    .equals(action)) {
+                //txtSearch.setText("SEARCH FOR DEVICES");
+                //refreshViews();
+            } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //btConnectionHandler.removeDisconnectedReomteConnection(device);
+                //connectionList = btConnectionHandler.getConnectionList();
+                //refreshViews();
+            } else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                //btConnectionHandler.addRemoteDeviceIfNotExist(device);
+                //connectionList = btConnectionHandler.getConnectionList();
+                //refreshViews();
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
