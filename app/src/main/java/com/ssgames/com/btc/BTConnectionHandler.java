@@ -117,7 +117,7 @@ public class BTConnectionHandler implements BTConnectThreadListener,
 	}
 
 	//This closes all connections
-	private void closeAllConnections() {
+	private synchronized void closeAllConnections() {
 
 		synchronized (BTConnectionHandler.this) {
 
@@ -180,7 +180,7 @@ public class BTConnectionHandler implements BTConnectThreadListener,
 		}
 	}
 
-	//This listen incoming connections when the device work as a BT host device
+	//This starts listening incoming connections when the device work as a BT host device
 	public void startListenIncomingConnections() {
 		if (acceptThread != null && acceptThread.isAlive()) {
 			return;
@@ -245,6 +245,7 @@ public class BTConnectionHandler implements BTConnectThreadListener,
 		}
 	}
 
+	//This manages connected connection count
 	private synchronized void changeConnectedCount(int change) {
 		connectedCount += change;
 		if (connectedCount < 0) {
@@ -338,7 +339,6 @@ public class BTConnectionHandler implements BTConnectThreadListener,
 	 * Accept thread
 	 * This thread run in a hosted device
 	 */
-
 	private class AcceptThread extends Thread {
 		private final BluetoothServerSocket btServerSocket;
 
@@ -405,7 +405,6 @@ public class BTConnectionHandler implements BTConnectThreadListener,
 	/*
 	 * Connection thread delegates
 	 */
-
 	@Override
 	public void btConnectedNewDataReceived(BluetoothSocket btSocket,
 			byte[] buffer) {

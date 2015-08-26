@@ -1,9 +1,11 @@
-package com.ssgames.com.btc;
+package com.ssgames.com.btc.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.ssgames.com.btc.R;
 
 
 public class MainActivity extends ActionBarActivity {
